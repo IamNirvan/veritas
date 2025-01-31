@@ -31,6 +31,22 @@ func main() {
 					"subject": "High Temperature Alert"
 				}
 			}
+		},
+		{
+			"conditions": [
+				{
+					"path": "status",
+					"operator": "eq",
+					"value": "inactive"
+				}
+			],
+			"then": {
+				"type": "sendSMS",
+				"params": {
+					"to": "0724454544",
+					"subject": "High Temperature Alert"
+				}
+			}
 		}
 	]`
 
@@ -42,6 +58,11 @@ func main() {
 	// Register action handlers
 	engine.RegisterActionHandler("sendEmail", func(params map[string]interface{}) error {
 		fmt.Println("sending emails...")
+		return nil
+	})
+
+	engine.RegisterActionHandler("sendSMS", func(params map[string]interface{}) error {
+		fmt.Println("sending SMS...")
 		return nil
 	})
 
