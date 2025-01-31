@@ -9,14 +9,14 @@ import (
 )
 
 type Veritas struct {
-	rules    *[]types.Rule
-	handlers *map[string]types.ActionHandler
+	rules    []types.Rule
+	handlers map[string]types.ActionHandler
 }
 
 func NewVeritas() *Veritas {
 	return &Veritas{
 		rules:    nil,
-		handlers: &map[string]types.ActionHandler{},
+		handlers: map[string]types.ActionHandler{},
 	}
 }
 
@@ -25,7 +25,7 @@ func (v *Veritas) LoadRules(raw []byte) error {
 }
 
 func (v *Veritas) RegisterActionHandler(actionType string, handler types.ActionHandler) {
-	(*v.handlers)[actionType] = handler
+	v.handlers[actionType] = handler
 }
 
 func (v *Veritas) EvaluateRules(input interface{}) error {
@@ -49,14 +49,13 @@ func (v *Veritas) EvaluateRules(input interface{}) error {
 	}
 
 	// Evaluate each rule
-	for _, rule := range *v.rules {
+	for _, rule := range v.rules {
 		if v.evaluateRule(rule, inputMap) {
 			if err := v.executeAction(rule.Then); err != nil {
 				return fmt.Errorf("failed to execute action: %s", err)
 			}
 		}
 	}
-
 	return nil
 }
 
@@ -94,7 +93,7 @@ func (v *Veritas) evaluateCondition(condition types.Condition, input map[string]
 
 // executeAction executes the specified action
 func (v *Veritas) executeAction(action types.Action) error {
-	handler, exists := (*v.handlers)[action.Type]
+	handler, exists := v.handlers[action.Type]
 	if !exists {
 		return fmt.Errorf("no handler registered for action type: %s", action.Type)
 	}
@@ -166,7 +165,7 @@ func (v *Veritas) validatePrerequisites() error {
 		return fmt.Errorf("no rules loaded")
 	}
 
-	if v.handlers == nil || len(*v.handlers) == 0 {
+	if v.handlers == nil || len(v.handlers) == 0 {
 		return fmt.Errorf("no action handlers registered")
 	}
 
