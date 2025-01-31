@@ -165,7 +165,7 @@ func (v *Veritas) validatePrerequisites() error {
 		return fmt.Errorf("no rules loaded")
 	}
 
-	if v.handlers == nil || len(v.handlers) == 0 {
+	if len(v.handlers) == 0 {
 		return fmt.Errorf("no action handlers registered")
 	}
 
