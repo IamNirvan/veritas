@@ -1,5 +1,7 @@
 # Vertias
 
+<img src="public/logo.png" width=300 height=300/>
+
 Veritas is a fully customisable JSON-based rule engine implemented using the Go programming language. Existing rule engines exist for Golang applications such as [grule-rule-engine](https://github.com/hyperjumptech/grule-rule-engine) from hyperjumptech. However, the aforementioned engine lacked the required rule customzation and execution flexibility that I desired. 
 
 This project is my attempt at creating an engine that is fully customizable. The engine in this project:
